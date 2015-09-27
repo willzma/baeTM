@@ -6,18 +6,94 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.RadioButton;
 
 public class MainMenuActivity extends AppCompatActivity {
 
+    String passableQuery = "";
+
+    public void onRadioButtonClicked (View view) {
+        boolean checked = ((RadioButton) view).isChecked();
+
+        switch(view.getId()) {
+            case R.id.groceryStores: {
+                if (checked) {
+                    passableQuery="grocery+stores";
+                }
+            }break;
+
+            case R.id.gasStations: {
+                if (checked) {
+                    passableQuery="gas+stations";
+                }
+            }break;
+
+            case R.id.restaurants: {
+                if (checked) {
+                    passableQuery="restaurants";
+                }
+            }break;
+
+            case R.id.movie_theaters: {
+                if (checked) {
+                    passableQuery="movie+theaters";
+                }
+            }break;
+
+            case R.id.pharmacies: {
+                if (checked) {
+                    passableQuery="pharmacies";
+                }
+            }break;
+
+            case R.id.Laundromats: {
+                if (checked) {
+                    passableQuery="laundromats";
+                }
+            }break;
+
+            case R.id.sportingGoods: {
+                if (checked) {
+                    passableQuery="sportings+goods+stores";
+                }
+            }break;
+
+            case R.id.convenienceStores: {
+                if (checked) {
+                    passableQuery="convenience+stores";
+                }
+            }break;
+
+            case R.id.clothingStores: {
+                if (checked) {
+                    passableQuery="clothing+stores";
+                }
+            }break;
+
+            case R.id.hardwareStores: {
+                if (checked) {
+                    passableQuery="hardware+stores";
+                }
+            }break;
+
+            case R.id.bank: {
+                if (checked) {
+                    passableQuery="capital+one+branch";
+                }
+            }break;
+        }
+    }
+
     public void GoToATMMap (View view) {
-        Intent myIntent = new Intent(this, ATMActivity.class);
+        Intent myIntent = new Intent(getApplicationContext(), ATMActivity.class);
         //myIntent.putExtra("key", value); //Optional parameters
+        myIntent.putExtra("query",passableQuery);
         startActivity(myIntent);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTitle("ATMATM");
+        setTitle("baeTM");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
     }

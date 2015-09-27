@@ -7,27 +7,11 @@
          is needed to present your content, e.g. VideoView, SurfaceView,
          TextureView, etc. -->
     <TextView android:id="@+id/fullscreen_content" android:layout_width="match_parent"
-        android:layout_height="wrap_content" android:keepScreenOn="true" android:textColor="#45a4af"
+        android:layout_height="wrap_content" android:keepScreenOn="true" android:textColor="#FFFFFF"
         android:textStyle="bold" android:textSize="50sp" android:gravity="top|center"
-        android:text="@string/app_title" />
-
-    <TextView android:id="@+id/pickbankatm"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/fullscreen_content"
-        android:text="@string/helpful_question"
-        android:textColor="#000000"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:gravity="center"/>
-
-    <Spinner android:id="@+id/dropdownbankatmspinner"
-        android:layout_below="@+id/pickbankatm"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:drawable/btn_dropdown"
-        android:entries="@array/dropdown_options"
-        android:spinnerMode="dropdown"/>
+        android:text="@string/app_title"
+        android:background="#003A6F"
+        />
 
     <TextView android:id="@+id/errandsneedtorun"
         android:layout_width="match_parent"
@@ -37,45 +21,118 @@
         android:textColor="#000000"
         android:textSize="18sp"
         android:text="@string/errands_question"
-        android:layout_below="@+id/dropdownbankatmspinner"/>
+        android:layout_below="@+id/fullscreen_content"/>
 
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:layout_below="@+id/errandsneedtorun">
+        <RadioGroup android:id="@+id/radioGroup1" android:layout_width="match_parent" android:layout_height="match_parent"
+            android:layout_gravity="center" android:gravity="top|center_horizontal"
+            android:paddingTop="10dp">
 
-        <TableRow android:gravity="center_horizontal">
-            <CheckBox android:id="@+id/groceryStores"
+
+            <RadioButton android:id="@+id/groceryStores"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Grocery Stores"
                 android:textColor="#000000"
                 android:textSize="14sp"
-                android:textStyle="bold"/>
-        </TableRow>
+                android:textStyle="bold"
+                android:onClick="onRadioButtonClicked"/>
 
-        <TableRow android:gravity="center_horizontal">
-            <CheckBox android:id="@+id/gasStations"
+            <RadioButton android:id="@+id/gasStations"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Gas Stations"
                 android:textColor="#000000"
                 android:textSize="14sp"
-                android:textStyle="bold"/>
-        </TableRow>
+                android:textStyle="bold"
+                android:onClick="onRadioButtonClicked"/>
 
-        <TableRow android:gravity="center_horizontal">
-            <CheckBox android:id="@+id/restaurants"
+            <RadioButton android:id="@+id/restaurants"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Restaurants"
                 android:textColor="#000000"
                 android:textSize="14sp"
-                android:textStyle="bold"/>
-        </TableRow>
+                android:textStyle="bold"
+                android:onClick="onRadioButtonClicked"/>
 
+                <RadioButton android:id="@+id/pharmacies"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Pharmacies"
+                    android:textColor="#000000"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:onClick="onRadioButtonClicked"/>
 
+                <RadioButton android:id="@+id/movie_theaters"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Movie Theaters"
+                    android:textColor="#000000"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:onClick="onRadioButtonClicked"/>
+
+                <RadioButton android:id="@+id/Laundromats"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Laundromats"
+                    android:textColor="#000000"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:onClick="onRadioButtonClicked"/>
+
+                <RadioButton android:id="@+id/sportingGoods"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Sporting Goods Stores"
+                    android:textColor="#000000"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:onClick="onRadioButtonClicked"/>
+
+                <RadioButton android:id="@+id/clothingStores"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Clothing Stores"
+                    android:textColor="#000000"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:onClick="onRadioButtonClicked"/>
+
+                <RadioButton android:id="@+id/convenienceStores"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Convenience Stores"
+                    android:textColor="#000000"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:onClick="onRadioButtonClicked"/>
+
+            <RadioButton android:id="@+id/hardwareStores"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Hardware Stores"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:onClick="onRadioButtonClicked"/>
+
+                <RadioButton android:id="@+id/bank"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Capital One Branches"
+                    android:textColor="#000000"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:onClick="onRadioButtonClicked"/>
+
+    </RadioGroup>
 
     </TableLayout>
 

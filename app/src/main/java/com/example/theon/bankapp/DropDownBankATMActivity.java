@@ -13,11 +13,11 @@ public class DropDownBankATMActivity extends Activity implements AdapterView.OnI
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Spinner dropdown = (Spinner)findViewById(R.id.dropdownbankatmspinner);
+        /*Spinner dropdown = (Spinner)findViewById(R.id.dropdownbankatmspinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.dropdown_options, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         dropdown.setAdapter(adapter);
-        dropdown.setOnItemSelectedListener(this);
+        dropdown.setOnItemSelectedListener(this);*/
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.support_simple_spinner_dropdown_item);

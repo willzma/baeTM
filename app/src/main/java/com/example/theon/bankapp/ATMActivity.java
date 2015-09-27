@@ -1,6 +1,9 @@
 package com.example.theon.bankapp;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
@@ -12,10 +15,13 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.view.View;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -36,20 +42,30 @@ import java.util.ArrayList;
 import com.reimaginebanking.api.java.NessieClient;
 import com.reimaginebanking.api.java.NessieException;
 import com.reimaginebanking.api.java.NessieResultsListener;
+import com.reimaginebanking.api.java.models.Address;
 import com.reimaginebanking.api.java.models.Branch;
 import com.reimaginebanking.api.java.models.Geocode;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 
-public class ATMActivity extends FragmentActivity {
+public class ATMActivity extends FragmentActivity implements GoogleMap.OnInfoWindowClickListener {
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
+
+    private LatLng selectedMarkerLatLng;
+
+    private String str = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         this.setTitle("Banks");
         //Intent intent = getIntent();
+
+        Intent in = getIntent();
+        str = in.getExtras().getString("query");
+
+
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_atm);
@@ -71,16 +87,27 @@ public class ATMActivity extends FragmentActivity {
         IOUtils.copy(is, writer, "utf-8");
         String theString = writer.toString();
         String str = theString;
-            ATM[] atms = g.fromJson(str, ATM[].class);
-            for (ATM a : atms) {
-                Geocode geo = a.getGeocode();
-                float lat = geo.getLat();
-                float lng = geo.getLng();
+        ATM[] atms = g.fromJson(str, ATM[].class);
 
-                mMap.addMarker(new MarkerOptions().position(new LatLng(lat,lng)));
-            }
+        for (ATM a : atms) {
+        Geocode geo = a.getGeocode();
+        float lat = geo.getLat();
+        float lng = geo.getLng();
 
+        Address ad = a.getAddress();
+
+        String s = "";
+        s += ad.getStreetNumber();
+        s += " "+ad.getStreetName()+", ";
+        s += ad.getCity() + ", "+ad.getState()+" "+ad.getZip();
+
+        mMap.addMarker(new MarkerOptions()
+                .position(new LatLng(lat,lng))
+                .title(s)
+                .snippet(a.getName()));
     }
+
+}
 
     public void populateBanks() {
         NessieClient n = NessieClient.getInstance();
@@ -135,18 +162,38 @@ public class ATMActivity extends FragmentActivity {
      * <p>
      * This should only be called once and when we are sure that {@link #mMap} is not null.
      */
-    private void setUpMap() {
+    private void setUpMap() throws SecurityException{
         try {
             populateATMs();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
 
         }
+        mMap.setOnInfoWindowClickListener(this);
         mMap.setMyLocationEnabled(true);
-        mMap.setOnMyLocationChangeListener(myLocationChangeListener);
+        LocationManager locationManager = (LocationManager) getSystemService(this.LOCATION_SERVICE);
+        Criteria criteria = new Criteria();
+
+        Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, false));
+        if (location != null)
+        {
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
+                    new LatLng(location.getLatitude(), location.getLongitude()), 10));
+
+            CameraPosition cameraPosition = new CameraPosition.Builder()
+                    .target(new LatLng(location.getLatitude(), location.getLongitude()))      // Sets the center of the map to location user
+                    .zoom(10)                   // Sets the zoom
+                    .build();                   // Creates a CameraPosition from the builder
+            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+            Circle circle = mMap.addCircle(new CircleOptions()
+                    .center(new LatLng(location.getLatitude(), location.getLongitude()))
+                    .radius(500)
+                    .strokeColor(Color.LTGRAY)
+                    .fillColor(Color.TRANSPARENT));
+
+        }
     }
 
-    private GoogleMap.OnMyLocationChangeListener myLocationChangeListener = new GoogleMap.OnMyLocationChangeListener() {
+    /*private GoogleMap.OnMyLocationChangeListener myLocationChangeListener = new GoogleMap.OnMyLocationChangeListener() {
         @Override
         public void onMyLocationChange(Location location) {
             mMap.setMyLocationEnabled(true);
@@ -160,5 +207,45 @@ public class ATMActivity extends FragmentActivity {
                     .strokeColor(Color.LTGRAY)
                     .fillColor(Color.TRANSPARENT));
         }
+    };*/
+
+    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            switch (which){
+                case DialogInterface.BUTTON_POSITIVE:
+                    //Yes button clicked
+                    GoToPOIActivity();
+                    break;
+
+                case DialogInterface.BUTTON_NEGATIVE:
+                    //No button clicked
+                    dialog.dismiss();
+                    break;
+            }
+        }
     };
+
+    public void GoToPOIActivity () {
+        double lat = selectedMarkerLatLng.latitude;
+        double lon = selectedMarkerLatLng.longitude;
+
+        Uri gmmIntentUri = Uri.parse("geo:" + lat +"," + lon+"?q="+str);
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        mapIntent.setPackage("com.google.android.apps.maps");
+        startActivity(mapIntent);
+    }
+
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Are you sure you want to use this ATM?").setPositiveButton("Yes", dialogClickListener)
+                .setNegativeButton("No", dialogClickListener).show();
+
+        selectedMarkerLatLng = marker.getPosition();
+    }
+
+    public LatLng getSelectedLatLng () {
+        return selectedMarkerLatLng;
+    }
 }

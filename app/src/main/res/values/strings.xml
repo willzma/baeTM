@@ -4,7 +4,7 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
 
-    <string name="app_title">Bank Run</string>
+    <string name="app_title">baeTM</string>
     <string name="title_activity_drop_down_bank_atm">DropDownBankATMActivity</string>
 
     <string name="hello_world">Hello world!</string>
@@ -22,4 +22,5 @@
     <string name="lets_go">Let\'s Go!</string>
     <string name="title_activity_atm">Map</string>
     <string name="title_activity_maps">Map</string>
+    <string name="title_activity_points_of_interest">Map</string>
 </resources>

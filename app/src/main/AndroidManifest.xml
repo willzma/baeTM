@@ -39,6 +39,10 @@
             android:name=".ATMActivity"
             android:label="@string/title_activity_atm" >
         </activity>
+        <activity
+            android:name=".PointsOfInterestActivity"
+            android:label="@string/title_activity_points_of_interest" >
+        </activity>
     </application>
 
 </manifest>
