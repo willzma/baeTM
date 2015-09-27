@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">BankApp</string>
+
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <string name="app_title">Bank Run</string>
+    <string name="title_activity_drop_down_bank_atm">DropDownBankATMActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="helpful_question">Are you looking for a bank, ATM, or both?</string>
+    <string name="errands_question">What errands do you need to run?</string>
+
+    <string-array name="dropdown_options">
+        <item>Bank</item>
+        <item>ATM</item>
+        <item>Either</item>
+    </string-array>
+
+    <string name="lets_go">Let\'s Go!</string>
+    <string name="title_activity_atm">Map</string>
+    <string name="title_activity_maps">Map</string>
+</resources>

@@ -1,0 +1,15 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="fill_parent"
+    android:layout_height="fill_parent" android:background="#FFFFFF"
+    android:layout_gravity="top">
+
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+        android:layout_height="300dp" android:id="@+id/map"
+        tools:context="com.example.theon.bankapp.ATMActivity"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_gravity="center">
+
+    </fragment>
+
+</LinearLayout>
