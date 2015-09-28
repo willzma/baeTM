@@ -3,7 +3,6 @@ package com.example.theon.bankapp;
 import android.content.Intent;
 import android.graphics.Color;
 import android.location.Criteria;
-import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.support.v4.app.FragmentActivity;
@@ -16,7 +15,6 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 public class PointsOfInterestActivity extends FragmentActivity {
 
